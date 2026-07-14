@@ -1,0 +1,26 @@
+<div class="mx-auto max-w-4xl px-4 py-8">
+  <h1 class="mb-6 text-2xl font-semibold text-gray-900">Movies</h1>
+
+  @if (loading()) {
+    <p class="text-gray-500">Loading movies...</p>
+  } @else if (errorMessage()) {
+    <p class="text-red-600">{{ errorMessage() }}</p>
+  } @else if (movies().length === 0) {
+    <p class="text-gray-500">No movies yet.</p>
+  } @else {
+    <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+      @for (movie of movies(); track movie.id) {
+        <li class="overflow-hidden rounded-lg bg-white shadow">
+          @if (movie.imageUrl) {
+            <img [src]="movie.imageUrl" [alt]="movie.name" class="h-48 w-full object-cover" />
+          }
+          <div class="p-4">
+            <h2 class="font-semibold text-gray-900">{{ movie.name }} ({{ movie.year }})</h2>
+            <p class="mt-1 line-clamp-3 text-sm text-gray-600">{{ movie.description }}</p>
+            <p class="mt-2 text-sm font-medium text-amber-600">★ {{ movie.rating | number: '1.1-1' }}</p>
+          </div>
+        </li>
+      }
+    </ul>
+  }
+</div>
